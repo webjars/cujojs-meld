@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <packaging>jar</packaging>
+    <groupId>org.webjars</groupId>
+    <artifactId>cujojs-meld</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+    <name>CujoJS: meld.js</name>
+    <description>WebJar for the meld.js AOP library from the CurlJS library.</description>
+    <url>http://webjars.org</url>
+
+    <licenses>
+        <license>
+            <name>Apache v2 License</name>
+            <url>https://github.com/phasebash/webjars-cujojs-meld.js/blob/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/phasebash/webjars-cujojs-meld.js</url>
+        <connection>scm:git:https://github.com/phasebash/webjars-cujojs-meld.js.git</connection>
+        <developerConnection>scm:git:https://github.com/phasebash/webjars-cujojs-meld.js.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>jamesward</id>
+            <name>James Ward</name>
+            <email>james@jamesward.org</email>
+        </developer>
+        <developer>
+            <id>phasebash</id>
+            <name>Brandon Zeeb</name>
+            <email>phasebash@gmail.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <cujo-module-name>meld</cujo-module-name>
+
+        <upstream.url>https://github.com/</upstream.url>
+        <upstream.version>1.3.0</upstream.version>
+
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}</destDir>
+
+        <maven-antrun-plugin-version>1.7</maven-antrun-plugin-version>
+        <maven-release-plugin-version>2.4</maven-release-plugin-version>
+        <wagon-http-lightweight-version>2.4</wagon-http-lightweight-version>
+        <wagon-maven-plugin-version>1.0-beta-4</wagon-maven-plugin-version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>${wagon-maven-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>download-release-artifact</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>download-single</goal>
+                        </goals>
+                        <configuration>
+                            <url>${upstream.url}</url>
+                            <fromFile>cujojs/${cujo-module-name}/archive/${upstream.version}.zip</fromFile>
+                            <toFile>${project.build.directory}/artifacts/${cujo-module-name}.zip</toFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven-antrun-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <tasks>
+                                <unzip src="${project.build.directory}/artifacts/${cujo-module-name}.zip" dest="${project.build.directory}/sources" />
+
+                                <move todir="${destDir}">
+                                    <fileset dir="${project.build.directory}/sources/${cujo-module-name}-${upstream.version}">
+                                        <include name="*.js" />
+                                    </fileset>
+                                </move>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin-version}</version>
+            </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <!-- this extension is required by wagon in order to pass the proxy -->
+                <!-- cf. http://jira.codehaus.org/browse/MNG-5237 -->
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-http-lightweight</artifactId>
+                <version>${wagon-http-lightweight-version}</version>
+            </extension>
+        </extensions>
+    </build>
+    
+</project>
