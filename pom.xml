@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>cujojs-meld</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <name>CujoJS: meld.js</name>
     <description>WebJar for the meld.js AOP library from the CurlJS library.</description>
     <url>http://webjars.org</url>
@@ -28,7 +28,7 @@
         <url>https://github.com/webjars/cujojs-meld</url>
         <connection>scm:git:https://github.com/webjars/cujojs-meld.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/cujojs-meld.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>cujojs-meld-1.3.0</tag>
     </scm>
 
     <developers>
