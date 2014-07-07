@@ -55,7 +55,7 @@
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}</destDir>
 
         <maven-antrun-plugin-version>1.7</maven-antrun-plugin-version>
-        <maven-release-plugin-version>2.4</maven-release-plugin-version>
+        <maven-release-plugin-version>2.5</maven-release-plugin-version>
         <wagon-http-lightweight-version>2.4</wagon-http-lightweight-version>
         <wagon-maven-plugin-version>1.0-beta-4</wagon-maven-plugin-version>
     </properties>
